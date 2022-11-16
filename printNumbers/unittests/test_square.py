@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# runTestSuite.py
+# test_factorial.py
 #
 # This file is part of PrintNumbers.
 #
@@ -20,26 +20,37 @@
 # along with PrintNumbers.  If not, see <http://www.gnu.org/licenses/>.
 
 #
-# Run unit test suite.
+# Unit tests: 'factorial'.
 #
 
-import unittest
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-import test_factorial
-import test_fibonacci
-import test_square
+import unittest
+from functions.square import *
+
+class TestSquare(unittest.TestCase):
+
+    def test_value_0(self):
+        self.assertEqual(Square(0), 0)
+
+    def test_value_1(self):
+        self.assertEqual(Square(1), 1)
+
+    def test_value_2(self):
+        self.assertEqual(Square(2), 4)
+
+    def test_value_10(self):
+        self.assertEqual(Square(10), 100)
 
 
 def suite():
-    suite = unittest.TestSuite()
-
-    suite.addTest(test_factorial.suite())
-    suite.addTest(test_fibonacci.suite())
-    suite.addTest(test_square.suite())
-
+    suite = unittest.makeSuite(TestSquare, 'test')
     return suite
 
-
-if __name__ == "__main__":
+def run():
     runner = unittest.TextTestRunner(verbosity = 2)
     runner.run(suite())
+
+if __name__ == "__main__":
+    run()
